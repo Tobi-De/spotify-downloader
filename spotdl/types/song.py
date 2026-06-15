@@ -116,7 +116,7 @@ class Song:
             ),
             genres=raw_album_meta.get("genres", []) + raw_artist_meta.get("genres", []),
             disc_number=raw_track_meta["disc_number"],
-            disc_count=int(raw_album_meta["tracks"]["items"][-1]["disc_number"]),
+            disc_count=int(raw_album_meta.get("tracks", {}).get("items", [{}])[-1].get("disc_number", 1)),
             duration=int(raw_track_meta["duration_ms"] / 1000),
             year=int(raw_album_meta["release_date"][:4]),
             date=raw_album_meta["release_date"],

@@ -55,7 +55,7 @@ class Artist(SongList):
 
         # include_groups used to be called album_type
         artist_albums = spotify_client.artist_albums(
-            url, include_groups="album,single,compilation"
+            url, include_groups="album,single,compilation", limit=10
         )
         # check if there is response
         if not artist_albums:
@@ -101,7 +101,7 @@ class Artist(SongList):
 
         metadata = {
             "name": raw_artist_meta["name"],
-            "genres": raw_artist_meta["genres"],
+            "genres": raw_artist_meta.get("genres", []),
             "url": url,
             "albums": albums,
         }

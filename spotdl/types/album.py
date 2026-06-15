@@ -89,7 +89,7 @@ class Album(SongList):
                 album_artist=album_metadata["artists"][0]["name"],
                 album_type=album_metadata["album_type"],
                 disc_number=track["disc_number"],
-                disc_count=int(album_metadata["tracks"]["items"][-1]["disc_number"]),
+                disc_count=int(album_metadata.get("tracks", {}).get("items", [{}])[-1].get("disc_number", 1)),
                 duration=int(track["duration_ms"] / 1000),
                 year=release_date[:4],
                 date=release_date,
@@ -97,7 +97,7 @@ class Album(SongList):
                 tracks_count=album_metadata["total_tracks"],
                 song_id=track["id"],
                 explicit=track["explicit"],
-                publisher=album_metadata["label"],
+                publisher=album_metadata.get("label", ""),
                 url=track["external_urls"]["spotify"],
                 cover_url=(
                     max(
